@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+struct cliente{
+    char nome[100], sexo[2];
+    int idade, dia, mes, ano, mesatual = 8, anoatual = 2023;
+    
+    void cadastro(){
+        printf("Nome: ");
+        scanf("%[^\n]%*c", nome);
+        printf("Sexo: ");
+        scanf("%[^\n]%*c", sexo);
+        printf("Data de Nascimento: ");
+        scanf("%d %d %d", &dia, &mes, &ano);
+        calculoidade();
+    }
+    
+    void calculoidade(){
+        if (mes < mesatual){
+            idade = anoatual - ano;
+        } else{
+            idade = (anoatual - ano) + 1;
+        }
+    }
+    
+    void imprimir(){
+        printf("\nNome: %s", nome);
+        printf("\nData de Nascimento: %d/%d/%d", dia, mes, ano);
+        printf("\nSexo: %s", sexo);
+        printf("\nIdade: %d\n", idade);
+    }
+};
+
+int main(){
+    cliente clientes[50]; 
+    int numClientes = 0;   
+    int opcao;
+
+    do {
+        printf("\n1. Cadastrar clientes");
+        printf("\n2. Listar Clientes");
+        printf("\n0. Sair\n");
+        
+        scanf("%d%*c", &opcao);
+        switch (opcao) {
+            case 1:
+                if (numClientes < 50) {
+                    clientes[numClientes].cadastro();
+                    numClientes++;
+                } else {
+                    printf("Limite máximo de clientes atingido.\n");
+                }
+                break;
+            case 2:
+                if(numClientes == 0){
+                    printf("Nenhum cliente cadastrado.");
+                } else {
+                printf("\nLista de Clientes:\n");
+                for (int i = 0; i < numClientes; i++) {
+                    printf("\nCliente %d:", i+1);
+                    clientes[i].imprimir();
+                }
+                }
+                break;
+        }
+    } while (opcao != 0);
+    
+    printf("Obrigado!");
+    
+    return 0;
+}
